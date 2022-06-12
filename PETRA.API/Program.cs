@@ -3,6 +3,7 @@ using PETRA.API.Config;
 using PETRA.Domain.AggregatesModel;
 using PETRA.Infrastructure.DataAccess;
 using PETRA.Infrastructure.DataAccess.Extesions;
+using PETRA.Infrastructure.ServiceBus.Extesions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +12,7 @@ builder.Configuration.AddJsonFile($"appsettings.{environment}.json",optional: fa
 var configuration = builder.Configuration.Get<AppConfiguration>();
 
 builder.Services.AddDataAccess(builder.Configuration.GetConnectionString("UserManager"));
- 
+builder.Services.AddServiceBus();
 
 var app = builder.Build();
 
