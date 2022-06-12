@@ -18,7 +18,7 @@ namespace PETRA.Infrastructure.DataAccess.Extesions
             // }
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddDbContext<DatabaseContext>(o => //o.UseLazyLoadingProxies()
-                                                            o.UseSqlServer(connectionString));
+                                                        o.UseNpgsql(connectionString));
         }
     }
 }

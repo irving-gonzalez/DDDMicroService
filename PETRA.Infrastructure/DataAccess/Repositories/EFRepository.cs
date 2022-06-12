@@ -39,7 +39,6 @@ namespace PETRA.Infrastructure.DataAccess.Repositories
 
         public virtual async Task<T> Upsert(T entity)
         {
-
             var entityToUpdate = await _dbContext.Set<T>()
                                                 .AsNoTracking()
                                                 .SingleOrDefaultAsync<T>(x => x.Id == entity.Id && !x.IsDeleted);

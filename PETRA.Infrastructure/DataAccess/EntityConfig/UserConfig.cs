@@ -8,7 +8,7 @@ namespace PETRA.Infrastructure.DataAccess.EntityConfig
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.ToTable("Applicant");
+            builder.ToTable("User");
 
             //[Required]
             builder.Property(p => p.FirstName).IsRequired();
