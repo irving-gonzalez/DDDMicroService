@@ -1,7 +1,10 @@
+using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PETRA.API;
 using PETRA.API.Config;
 using PETRA.Domain.AggregatesModel;
+using PETRA.Infrastructure;
 using PETRA.Infrastructure.DataAccess;
 using PETRA.Infrastructure.DataAccess.Extesions;
 using PETRA.Infrastructure.ServiceBus.Extesions;
@@ -17,16 +20,17 @@ builder.Services.AddServiceBus(configuration.ServiceBus);
 
 var app = builder.Build();
 
-// var dbContext = app.Services.GetService<DatabaseContext>();
-// dbContext.Database.EnsureCreated();
-
-app.MapGet("/", async (IUserRepository userRepository,DatabaseContext db) => {
-      db.Database.Migrate();
+app.MapGet("/", async (IUserRepository userRepository) => {
       return await userRepository.GetAll();
     });
 
 app.MapPost("/", async ([FromBody] User user, IUserRepository userRepository, DatabaseContext db) => {
       return await userRepository.Add(user);
+    });
+    
+app.MapPost("/message", async (string message, IBus bus, ISendEndpointProvider provider) => {
+       //await provider.Send<Message>(new Message {Text = message});
+       await bus.Publish(new Message { Text = message });
     });
 
 app.Run();
