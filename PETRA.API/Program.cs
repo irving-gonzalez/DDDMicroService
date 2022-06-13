@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PETRA.API.Config;
 using PETRA.Domain.AggregatesModel;
@@ -12,7 +13,7 @@ builder.Configuration.AddJsonFile($"appsettings.{environment}.json",optional: fa
 var configuration = builder.Configuration.Get<AppConfiguration>();
 
 builder.Services.AddDataAccess(builder.Configuration.GetConnectionString("UserManager"));
-builder.Services.AddServiceBus();
+builder.Services.AddServiceBus(configuration.ServiceBus);
 
 var app = builder.Build();
 
@@ -22,6 +23,10 @@ var app = builder.Build();
 app.MapGet("/", async (IUserRepository userRepository,DatabaseContext db) => {
       db.Database.Migrate();
       return await userRepository.GetAll();
+    });
+
+app.MapPost("/", async ([FromBody] User user, IUserRepository userRepository, DatabaseContext db) => {
+      return await userRepository.Add(user);
     });
 
 app.Run();
