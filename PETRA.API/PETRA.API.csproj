@@ -1,21 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
-
   <ItemGroup>
-    <ProjectReference Include="..\PETRA.Domain\PETRA.Domain.csproj" />
-    <ProjectReference Include="..\PETRA.Infrastructure\PETRA.Infrastructure.csproj" />
+    <ProjectReference Include="..\PETRA.Domain\PETRA.Domain.csproj"/>
+    <ProjectReference Include="..\PETRA.Infrastructure\PETRA.Infrastructure.csproj"/>
   </ItemGroup>
-  
-    <ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.4">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.3.1"/>
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.3.1"/>
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.3.1"/>
   </ItemGroup>
-
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
-
 </Project>

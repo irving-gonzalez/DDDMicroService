@@ -1,31 +1,30 @@
 using MassTransit;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using PETRA.API;
-using PETRA.API.Config;
+using PETRA.Application.Config;
+using PETRA.Application.Queries;
 using PETRA.Domain.AggregatesModel;
 using PETRA.Infrastructure;
 using PETRA.Infrastructure.DataAccess;
-using PETRA.Infrastructure.DataAccess.Extesions;
-using PETRA.Infrastructure.ServiceBus.Extesions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var environment = builder.Environment.EnvironmentName;
 builder.Configuration.AddJsonFile($"appsettings.{environment}.json",optional: false, reloadOnChange: true);
-var configuration = builder.Configuration.Get<AppConfiguration>();
 
-builder.Services.AddDataAccess(builder.Configuration.GetConnectionString("UserManager"));
-builder.Services.AddServiceBus(configuration.ServiceBus);
+builder.Services.AddServices(builder.Configuration);
 
 var app = builder.Build();
+app.Configure();
 
-app.MapGet("/", async (IUserRepository userRepository) => {
-      return await userRepository.GetAll();
+app.MapGet("/users", async (IMediator mediator) => {
+        var query  = new GetUsersQuery(u => u.FirstName == "Jorge");
+        return await mediator.Send(query);
     });
 
 app.MapPost("/", async ([FromBody] User user, IUserRepository userRepository, DatabaseContext db) => {
-      return await userRepository.Add(user);
+       user.UpdateName("test","Test");
+       return await userRepository.Add(user);
     });
     
 app.MapPost("/message", async (string message, IBus bus, ISendEndpointProvider provider) => {

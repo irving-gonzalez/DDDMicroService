@@ -1,26 +1,35 @@
+using System.Linq.Expressions;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using PETRA.Domain;
 using PETRA.Domain.Entities;
+using PETRA.Infrastructure.Mediator.Extensions;
 
 namespace PETRA.Infrastructure.DataAccess.Repositories
 {
     public class EFRepository<T> : IRepository<T> where T : BaseEntity
     {
         protected readonly DatabaseContext _dbContext;
-        public EFRepository(DatabaseContext dbContext)
+        private readonly IMediator _mediator;
+        public EFRepository(DatabaseContext dbContext, IMediator mediator)
         {
             _dbContext = dbContext;
+            _mediator = mediator;
         }
 
-        protected virtual IQueryable<T> Get()
+        protected virtual IQueryable<T> Get(Expression<Func<T,bool>> predicate)
         {
-            return _dbContext.Set<T>().Where<T>(x => !x.IsDeleted);
+            return _dbContext.Set<T>().Where<T>(predicate);
         }
 
-        public virtual async Task<IEnumerable<T>> GetAll()
+        public virtual async Task<IEnumerable<T>> GetAll(Expression<Func<T,bool>> predicate)
         {
-            var entities = await _dbContext.Set<T>().Where<T>(x => !x.IsDeleted).ToListAsync();
-            return entities;
+            var query = _dbContext.Set<T>().Where<T>(x => !x.IsDeleted);
+            if(predicate != null)
+            {
+               query = query.Where(predicate);
+            }       
+            return await query.ToListAsync();
         }
 
         public virtual async Task<T> Get(int id)
@@ -96,6 +105,14 @@ namespace PETRA.Infrastructure.DataAccess.Repositories
 
         protected async Task<int> Save(bool cleanTracker = true)
         {
+            // Dispatch Domain Events collection. 
+            // Choices:
+            // A) Right BEFORE committing data (EF SaveChanges) into the DB will make a single transaction including  
+            // side effects from the domain event handlers which are using the same DbContext with "InstancePerLifetimeScope" or "scoped" lifetime
+            // B) Right AFTER committing data (EF SaveChanges) into the DB will make multiple transactions. 
+            // You will need to handle eventual consistency and compensatory actions in case of failures in any of the Handlers.
+            await _mediator.DispatchDomainEventsAsync(_dbContext);
+
             var result = await _dbContext.SaveChangesAsync();
 
             if (cleanTracker)
