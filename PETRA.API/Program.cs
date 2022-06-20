@@ -2,6 +2,7 @@ using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using PETRA.Application.Config;
+using PETRA.Application.Configuration;
 using PETRA.Application.Queries;
 using PETRA.Domain.AggregatesModel;
 using PETRA.Infrastructure;
@@ -10,9 +11,12 @@ using PETRA.Infrastructure.DataAccess;
 var builder = WebApplication.CreateBuilder(args);
 
 var environment = builder.Environment.EnvironmentName;
-builder.Configuration.AddJsonFile($"appsettings.{environment}.json",optional: false, reloadOnChange: true);
+var configuration = AppConfigurationManager.Build(environment);
+builder.Services.AddApplicationServices(configuration);
 
-builder.Services.AddServices(builder.Configuration);
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 
 var app = builder.Build();
 app.Configure();

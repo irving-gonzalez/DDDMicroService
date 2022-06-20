@@ -1,7 +1,7 @@
 using MediatR;
 using PETRA.Domain.Events;
 
-namespace PETRA.API.DomainEventHandlers
+namespace PETRA.Application.DomainEventHandlers
 {
     public class UserUpdatedDomainEventHandler : INotificationHandler<UserUpdatedDomainEvent>
     {
