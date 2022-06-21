@@ -1,3 +1,5 @@
+using PETRA.Infrastructure.BackgroundWorker;
+
 namespace PETRA.Application.Config
 {
     public static class AppConfigurationExtensions
@@ -13,7 +15,9 @@ namespace PETRA.Application.Config
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger XML Api Demo v1");
                     c.RoutePrefix = string.Empty;
                 });
+                app.UseBackgroundWorkerDashboard();
             }
+
         }
     }
 }

@@ -11,11 +11,11 @@ USER appuser
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0-focal AS build
 WORKDIR /src
-COPY ["user-manager/PETRA.API/PETRA.API.csproj", "user-manager/PETRA.API/"]
-RUN dotnet restore "user-manager/PETRA.API/PETRA.API.csproj"
+COPY ["DDDMicroService/PETRA.API/PETRA.API.csproj", "DDDMicroService/PETRA.API/"]
+RUN dotnet restore "DDDMicroService/PETRA.API/PETRA.API.csproj"
 RUN dotnet tool restore
 COPY . .
-WORKDIR "/src/user-manager/PETRA.API"
+WORKDIR "/src/DDDMicroService/PETRA.API"
 RUN dotnet build "PETRA.API.csproj" -c Release -o /app/build
 
 FROM build AS publish

@@ -1,6 +1,7 @@
 using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PETRA.Application.Config;
 using PETRA.Application.Configuration;
 using PETRA.Application.Queries;
@@ -18,15 +19,18 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
 app.Configure();
 
-app.MapGet("/users", async (IMediator mediator) => {
-        var query  = new GetUsersQuery(u => u.FirstName == "Jorge");
+
+app.MapGet("/users", async (IMediator mediator, DatabaseContext db) => {
+         db.Database.Migrate();
+        var query  = new GetUsersQuery();
         return await mediator.Send(query);
     });
 
 app.MapPost("/", async ([FromBody] User user, IUserRepository userRepository, DatabaseContext db) => {
-       user.UpdateName("test","Test");
+       //user.UpdateName("test","Test");
        return await userRepository.Add(user);
     });
     
