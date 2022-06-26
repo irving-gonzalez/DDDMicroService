@@ -29,11 +29,11 @@ public class WeatherForecastController : ControllerBase
     }
 
     [HttpGet(Name = "GetWeatherForecast")]
-    public async Task<string>  Get()
+    public async Task<IActionResult>  Get()
     {
         // await  _userRepository.Add(new PETRA.Domain.AggregatesModel.User());
         var command = new SendMsgCommand("test msg from meidatR");
         await _mediator.Send(command);
-        return "test";
+        return Ok();
     }
 }

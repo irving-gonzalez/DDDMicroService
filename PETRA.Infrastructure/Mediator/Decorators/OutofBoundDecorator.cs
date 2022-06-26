@@ -3,21 +3,21 @@ using MediatR;
 
 namespace PETRA.Infrastructure.Decorators
 {
-    public class OutofBoundDecorator<TRequest> : IRequestHandler<TRequest, bool> where TRequest : IRequest<bool>
+    public class OutofBoundDecorator<TRequest> : IRequestHandler<TRequest, Unit> where TRequest : IRequest<Unit>
     {
-        private readonly IRequestHandler<TRequest, bool> _inner;
+        private readonly IRequestHandler<TRequest, Unit> _inner;
         private readonly IBackgroundJobClient _backgroundJobs;
         
-        public OutofBoundDecorator(IRequestHandler<TRequest, bool> inner, IBackgroundJobClient backgroundJobs)
+        public OutofBoundDecorator(IRequestHandler<TRequest, Unit> inner, IBackgroundJobClient backgroundJobs)
         {
             _inner = inner;
             _backgroundJobs = backgroundJobs;
         }
 
-        Task<bool> IRequestHandler<TRequest, bool>.Handle(TRequest request, CancellationToken cancellationToken)
+        Task<Unit> IRequestHandler<TRequest, Unit>.Handle(TRequest request, CancellationToken cancellationToken)
         {
             _backgroundJobs.Enqueue(() => _inner.Handle(request, cancellationToken));
-             return Task.FromResult(true);
+             return Unit.Task;
         }
     }
 }

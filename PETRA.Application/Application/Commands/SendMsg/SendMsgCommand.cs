@@ -1,20 +1,20 @@
 using MediatR;
+using PETRA.Infrastructure.Mediator;
 using PETRA.Infrastructure.Mediator.Attributes;
 
 namespace PETRA.Application.Commands
 {
     [OutOfBand]
-    public class SendMsgCommandHandler : IRequestHandler<SendMsgCommand, bool>
+    public class SendMsgCommandHandler : ICommandHandler<SendMsgCommand>
     {
         public SendMsgCommandHandler()
-        {
-            
+        {    
         }
 
-        public Task<bool> Handle(SendMsgCommand request, CancellationToken cancellationToken)
+        public Task<Unit> Handle(SendMsgCommand request, CancellationToken cancellationToken)
         {
            Console.WriteLine($"Sending msg {request._msg}");
-           return Task.FromResult(true);
+           return Unit.Task;
         }
     }
 }

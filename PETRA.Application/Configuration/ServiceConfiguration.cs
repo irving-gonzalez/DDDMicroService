@@ -1,10 +1,9 @@
- using System.Reflection;
+using System.Reflection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using PETRA.Infrastructure.BackgroundWorker;
 using PETRA.Infrastructure.DataAccess.Extesions;
 using PETRA.Infrastructure.ServiceBus.Extesions;
