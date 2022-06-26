@@ -22,7 +22,7 @@ namespace PETRA.Infrastructure.DataAccess.Repositories
             return _dbContext.Set<T>().Where<T>(predicate);
         }
 
-        public virtual async Task<IEnumerable<T>> GetAll(Expression<Func<T,bool>> predicate)
+        public virtual async Task<IEnumerable<T>> GetAll(Expression<Func<T,bool>>? predicate = null)
         {
             var query = _dbContext.Set<T>().Where<T>(x => !x.IsDeleted);
             if(predicate != null)

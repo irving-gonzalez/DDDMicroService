@@ -11,8 +11,8 @@ namespace PETRA.Application.DomainEventHandlers
 
         public Task Handle(UserUpdatedDomainEvent notification, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("notification handler called");
+            return Task.CompletedTask;
         }
     }
 }
-    

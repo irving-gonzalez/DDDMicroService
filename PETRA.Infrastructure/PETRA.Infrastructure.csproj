@@ -1,25 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Hangfire.Core" Version="1.7.30" />
-    <PackageReference Include="Hangfire.PostgreSql" Version="1.9.8" />
-    <PackageReference Include="Hangfire.AspNetCore" Version="1.7.*" />
-    <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.3" />
+    <PackageReference Include="Hangfire.Core" Version="1.7.30"/>
+    <PackageReference Include="Hangfire.PostgreSql" Version="1.9.8"/>
+    <PackageReference Include="Hangfire.AspNetCore" Version="1.7.*"/>
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.3"/>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.4">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.4" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.4"/>
+    <PackageReference Include="Autofac" Version="6.4.0"/>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0"/>
   </ItemGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\PETRA.Domain\PETRA.Domain.csproj" />
+    <ProjectReference Include="..\PETRA.Domain\PETRA.Domain.csproj"/>
   </ItemGroup>
-
 </Project>

@@ -1,10 +1,14 @@
+using System.Reflection;
+using Autofac;
 using MediatR;
 using PETRA.Domain.Entities;
 using PETRA.Infrastructure.DataAccess;
+using PETRA.Infrastructure.Decorators;
+using PETRA.Infrastructure.Mediator.Attributes;
 
 namespace PETRA.Infrastructure.Mediator.Extensions
 {
-    static class MediatorExtensions
+    public static class MediatorExtensions
     {
         public static async Task DispatchDomainEventsAsync(this IMediator mediator, DatabaseContext ctx)
         {
@@ -22,6 +26,17 @@ namespace PETRA.Infrastructure.Mediator.Extensions
 
             foreach (var domainEvent in domainEvents)
                 await mediator.Publish(domainEvent);
+        }
+
+        public static void AddOutOfBoundDecorator(this ContainerBuilder builder)
+        {
+             builder.RegisterGenericDecorator(typeof(OutofBoundDecorator<>), typeof(IRequestHandler<,>), (ctx) => 
+             { 
+                 var attribute = ctx.CurrentInstance
+                 .GetType()
+                 .GetCustomAttribute<OutOfBandAttribute>();
+                 return attribute is null ? false : true;
+             });
         }
     }
 }
