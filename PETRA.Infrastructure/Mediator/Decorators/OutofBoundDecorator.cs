@@ -4,7 +4,7 @@ using PETRA.Infrastructure.Mediator;
 
 namespace PETRA.Infrastructure.Decorators
 {
-    public class OutofBoundDecorator<TRequest> : IRequestHandler<TRequest, Unit> where TRequest : ICommand
+    public class OutofBoundDecorator<TRequest> : ICommandHandler<TRequest> where TRequest : ICommand
     {
         private readonly IRequestHandler<TRequest, Unit> _inner;
         private readonly IBackgroundJobClient _backgroundJobs;
