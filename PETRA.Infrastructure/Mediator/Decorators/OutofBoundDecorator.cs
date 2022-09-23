@@ -1,9 +1,10 @@
 using Hangfire;
 using MediatR;
+using PETRA.Infrastructure.Mediator;
 
 namespace PETRA.Infrastructure.Decorators
 {
-    public class OutofBoundDecorator<TRequest> : IRequestHandler<TRequest, Unit> where TRequest : IRequest<Unit>
+    public class OutofBoundDecorator<TRequest> : IRequestHandler<TRequest, Unit> where TRequest : ICommand
     {
         private readonly IRequestHandler<TRequest, Unit> _inner;
         private readonly IBackgroundJobClient _backgroundJobs;
