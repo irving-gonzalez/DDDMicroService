@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Hangfire.Core" Version="1.7.31"/>
+    <PackageReference Include="Hangfire.Core" Version="1.7.33"/>
     <PackageReference Include="Hangfire.PostgreSql" Version="1.9.8"/>
     <PackageReference Include="Hangfire.AspNetCore" Version="1.7.*"/>
     <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.3"/>
