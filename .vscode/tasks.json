@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/PETRA.API/PETRA.API.csproj",
+                "${workspaceFolder}/DDDMicroservice.API/DDDMicroservice.API.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/PETRA.API/PETRA.API.csproj",
+                "${workspaceFolder}/DDDMicroservice.API/DDDMicroservice.API.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -33,7 +33,7 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/PETRA.API/PETRA.API.csproj"
+                "${workspaceFolder}/DDDMicroservice.API/DDDMicroservice.API.csproj"
             ],
             "problemMatcher": "$msCompile"
         }
