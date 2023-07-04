@@ -9,17 +9,13 @@ using DDDMicroservice.Infrastructure.DataAccess.Extesions;
 using DDDMicroservice.Infrastructure.Mediator.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using DDDMicroservice.Infrastructure.DataAccess;
-using DDDMicroservice.Domain.AggregatesModel;
-using DDDMicroservice.Infrastructure.DataAccess.Repositories;
 using DDDMicroservice.Application.Providers;
 using DDDMicroservice.Infrastructure.Clients;
-using DDDMicroservice.Application.Services;
 using DDDMicroservice.Application.Authorization;
 using DDDMicroservice.Application.Authorization.Extesions;
 using Serilog;
 using DDDMicroservice.Infrastructure.Jobs;
 using DDDMicroservice.Infrastructure.ServiceBus.Extesions;
-using AutoMapper;
 
 namespace DDDMicroservice.Application.Configuration
 {

@@ -1,8 +1,6 @@
-namespace DDDMicroservice.Domain.AggregatesModel
+namespace DDDMicroservice.Domain.AggregatesModel;
+public enum MessageType
 {
-    public enum MessageType
-    {
-        Email = 1,
-        SMS = 2,
-    }
+    Email = 1,
+    SMS = 2,
 }

@@ -1,17 +1,14 @@
 using DDDMicroservice.Domain.Entities;
 
-namespace DDDMicroservice.Domain.AggregatesModel
+namespace DDDMicroservice.Domain.AggregatesModel;
+public class User : Entity, IAggregateRoot
 {
-    public class User : Entity, IAggregateRoot
+    public string Username { get; set; } = string.Empty;
+    public string FirstName { get; set; } = string.Empty;
+    public string LastName { get; set; } = string.Empty;
+
+    public void UpdateName(string firstname, string LastName)
     {
-
-        public string Username { get; set; } = string.Empty;
-        public string FirstName { get; set; } = string.Empty;
-        public string LastName { get; set; } = string.Empty;
-
-        public void UpdateName(string firstname, string LastName)
-        {
-            AddDomainEvent(new UserUpdatedDomainEvent(this));
-        }
+        AddDomainEvent(new UserUpdatedDomainEvent(this));
     }
 }
