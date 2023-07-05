@@ -7,8 +7,16 @@ public class User : Entity, IAggregateRoot
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
 
-    public void UpdateName(string firstname, string LastName)
+
+    public User()
     {
+        AddDomainEvent(new UserCreatedDomainEvent(this));
+    }
+
+    public void UpdateName(string firstname, string lastName)
+    {
+        FirstName = firstname;
+        LastName = lastName;
         AddDomainEvent(new UserUpdatedDomainEvent(this));
     }
 }
