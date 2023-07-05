@@ -1,4 +1,5 @@
 using Asp.Versioning;
+using DDDMicroservice.API.Hubs;
 using DDDMicroservice.Application.Config;
 using DDDMicroservice.Application.Configuration;
 using DDDMicroservice.Infrastructure.Jobs;
@@ -17,6 +18,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddControllers();
+builder.Services.AddSignalR();
 
 
 builder.Services.AddApiVersioning(opt =>
@@ -40,13 +42,10 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-
 app.UseCors("CorsPolicy");
 app.UseAuthentication();
 app.Configure();
 app.RunRecurrentJobs();
-
-// var userrep =  app.Services.GetRequiredService<IUserRepository>();
 
 // app.MapGet("/users", async (IMediator mediator) => {
 //        //  db.Database.Migrate();
@@ -59,5 +58,6 @@ app.RunRecurrentJobs();
 //        return await userRepository.Add(user);
 //     });
 
+app.MapHub<ChatHub>("/chatHub");
 app.MapControllers();
 app.Run();
