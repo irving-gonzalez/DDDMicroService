@@ -25,7 +25,7 @@ namespace DDDMicroservice.Infrastructure.DataAccess.Repositories
         public virtual async Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>>? predicate = null)
         {
             var query = _dbContext.Set<T>().Where<T>(x => !x.IsDeleted);
-            if (predicate != null)
+            if (predicate is not null)
             {
                 query = query.Where(predicate);
             }
@@ -41,8 +41,6 @@ namespace DDDMicroservice.Infrastructure.DataAccess.Repositories
         public virtual async Task<T>? Add(T entity)
         {
             var result = await _dbContext.Set<T>().AddAsync(entity);
-
-            await Save();
             return entity;
         }
 
@@ -53,7 +51,7 @@ namespace DDDMicroservice.Infrastructure.DataAccess.Repositories
                                                 .SingleOrDefaultAsync<T>(x => x.Id == entity.Id && !x.IsDeleted);
 
             //Insert if entity is not found
-            if (entityToUpdate == null)
+            if (entityToUpdate is null)
             {
                 return await Add(entity);
             }
@@ -62,7 +60,6 @@ namespace DDDMicroservice.Infrastructure.DataAccess.Repositories
                 _dbContext.Update(entity);
             }
 
-            await Save();
             return entityToUpdate;
         }
 
@@ -78,8 +75,6 @@ namespace DDDMicroservice.Infrastructure.DataAccess.Repositories
             //Soft Delete
             entityToDelete.IsDeleted = true;
             entityToDelete.DeletedDateUtc = DateTime.UtcNow;
-
-            await Save();
             return true;
         }
 
@@ -99,11 +94,10 @@ namespace DDDMicroservice.Infrastructure.DataAccess.Repositories
                 e.DeletedDateUtc = DateTime.UtcNow;
             });
 
-            await Save();
             return true;
         }
 
-        protected async Task<int> Save(bool cleanTracker = true)
+        public async Task<int> Save(bool cleanTracker = true)
         {
             // Dispatch Domain Events collection. 
             // Choices:

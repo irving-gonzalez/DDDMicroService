@@ -7,9 +7,10 @@ namespace DDDMicroservice.Domain
     {
         Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>>? filter = null);
         // Task<T> Get(int id);
-        Task<T>? Add(T model);
+        Task<T> Add(T model);
         // Task<T>? Upsert(T model);
         // Task<bool> Delete(int id);
         // Task<bool> Delete(IEnumerable<int> ids);
+        Task<int> Save(bool cleanTracker = true);
     }
 }

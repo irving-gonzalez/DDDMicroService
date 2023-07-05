@@ -16,6 +16,8 @@ using DDDMicroservice.Application.Authorization.Extesions;
 using Serilog;
 using DDDMicroservice.Infrastructure.Jobs;
 using DDDMicroservice.Infrastructure.ServiceBus.Extesions;
+using DDDMicroservice.Domain.AggregatesModel;
+using DDDMicroservice.Infrastructure.DataAccess.Repositories;
 
 namespace DDDMicroservice.Application.Configuration
 {
@@ -43,6 +45,7 @@ namespace DDDMicroservice.Application.Configuration
                 services.AddScoped<IIdentityProvider, KeycloakIdentityProvider>();
                 services.AddSingleton<DapperContext>(r => new DapperContext(configurationManager));
                 services.AddTransient<IRestClient, RestClient>();
+                services.AddScoped<IUserRepository, UserRepository>();
                 services.AddHttpClient();
 
                 services.AddDataAccess(configurationManager.GetConnectionString("UserManager"));
